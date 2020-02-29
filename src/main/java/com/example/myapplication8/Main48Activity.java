@@ -1,10 +1,10 @@
 package com.example.myapplication8;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Main48Activity extends AppCompatActivity {
 
@@ -16,5 +16,7 @@ public class Main48Activity extends AppCompatActivity {
         String em=sp1.getString("email",null);
         TextView textView = (TextView) findViewById(R.id.prof_email);
         textView.setText(em);
+
+
     }
 }

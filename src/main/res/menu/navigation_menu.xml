@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/nav_account"
         android:icon="@mipmap/baseline_person_black_24dp"
-        android:title="my_account" />
+        android:title="My Account" />
     <item android:id="@+id/nav_location"
         android:icon="@mipmap/baseline_location_on_black_24dp"
-        android:title="location"/>
+        android:title="Location Notifaction"/>
     <item android:id="@+id/nav_logout"
         android:icon="@mipmap/logout"
-        android:title="logout"/>
+        android:title="Logout"/>
 </menu>

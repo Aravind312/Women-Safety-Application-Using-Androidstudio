@@ -15,27 +15,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".locationnotification" />
         <activity android:name=".Mylocationfinding" />
+
         <service
             android:name=".MyService"
             android:enabled="true"
             android:exported="true" />
+
         <receiver android:name=".MyBootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
+
         <activity android:name=".Main48Activity" />
         <activity android:name=".Main40Activity" />
         <activity android:name=".Main8Activity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".splashscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".GPS_Service"/>
+
+        <service android:name=".GPS_Service" />
     </application>
 
 </manifest>

@@ -9,10 +9,12 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -21,7 +23,17 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main40Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     DrawerLayout mdrawerLayout;
@@ -32,6 +44,8 @@ public class Main40Activity extends AppCompatActivity implements NavigationView.
     private Button btn_start, btn_stop;
     private TextView textView;
     private BroadcastReceiver broadcastReceiver;
+    String url="https://womenssafety8.000webhostapp.com/locationdetails.php";
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -43,9 +57,44 @@ public class Main40Activity extends AppCompatActivity implements NavigationView.
                     // textView.append("\n" +intent.getExtras().get("coordinates"));
                     TextView textView8 = (TextView) findViewById(R.id.textView);
                     textView8.setText("\n" +intent.getExtras().get("coordinates"));
+                    final String locationname = textView8.getText().toString();
+                    SharedPreferences sp1=getSharedPreferences("Login",MODE_PRIVATE);
+                    final String em=sp1.getString("email",null);
+                    RequestQueue queue = Volley.newRequestQueue(Main40Activity.this);
+                    StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
+                    {
+                        @Override
+                        public void onResponse(String response)
+                        {
+                            Toast.makeText(Main40Activity.this, response, Toast.LENGTH_SHORT).show();
+                            Log.i("My success", "" + response);
+                            // startActivity(new Intent(Main40Activity.this, MainActivity.class));
+                        }
 
+
+                    },
+
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Toast.makeText(Main40Activity.this, "Error : " + error, Toast.LENGTH_LONG).show();
+                                    Log.i("My error", "" + error);
+                                }
+                            })
+                    {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError
+                        {
+                            Map<String, String> map = new HashMap<String, String>();
+                            map.put("gmail",em);
+                            map.put("locationdetails", locationname);
+                            return map;
+                        }
+                    };
+                    queue.add(request);
                 }
             };
+
         }
         registerReceiver(broadcastReceiver,new IntentFilter("location_update"));
     }
@@ -156,8 +205,8 @@ public class Main40Activity extends AppCompatActivity implements NavigationView.
                 break;
             }
             case R.id.nav_location: {
-              //  Intent in2 = new Intent(Main40Activity.this, Mylocationfinding.class);
-              //  startActivity(in2);
+                Intent in2 = new Intent(Main40Activity.this, locationnotification.class);
+                startActivity(in2);
                 break;
             }
             case R.id.nav_logout: {

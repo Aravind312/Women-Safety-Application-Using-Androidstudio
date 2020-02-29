@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ public class Mylocationfinding extends AppCompatActivity {
     private Button btn_start, btn_stop;
     private TextView textView;
     private BroadcastReceiver broadcastReceiver;
+    String url="https://womenssafety8.000webhostapp.com/locationdetails.php";
 
     @Override
     protected void onResume() {
@@ -32,10 +34,47 @@ public class Mylocationfinding extends AppCompatActivity {
                    // textView.append("\n" +intent.getExtras().get("coordinates"));
                     TextView textView8 = (TextView) findViewById(R.id.textView);
                     textView8.setText("\n" +intent.getExtras().get("coordinates"));
+                    final String locationname = textView8.getText().toString();
+                    SharedPreferences sp1=getSharedPreferences("Login",MODE_PRIVATE);
+                    final String em=sp1.getString("email",null);
 
+                 /*   RequestQueue queue = Volley.newRequestQueue(Mylocationfinding.this);
+                    StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
+                    {
+                        @Override
+                        public void onResponse(String response)
+                        {
+                            Toast.makeText(Mylocationfinding.this, response, Toast.LENGTH_SHORT).show();
+                            Log.i("My success", "" + response);
+                            // startActivity(new Intent(Main40Activity.this, MainActivity.class));
+                        }
+
+
+                    },
+
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Toast.makeText(Mylocationfinding.this, "Error : " + error, Toast.LENGTH_LONG).show();
+                                    Log.i("My error", "" + error);
+                                }
+                            })
+                    {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError
+                        {
+                            Map<String, String> map = new HashMap<String, String>();
+                            map.put("gmail",em);
+                            map.put("locationdetails", locationname);
+                            return map;
+                        }
+                    };
+                    queue.add(request);*/
                 }
             };
-        }
+
+
+}
         registerReceiver(broadcastReceiver,new IntentFilter("location_update"));
     }
 
